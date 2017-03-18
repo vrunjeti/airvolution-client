@@ -5,9 +5,16 @@ import { Destination } from './components'
 import { dummyData } from './utils/dummyData'
 
 class App extends React.Component {
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords
+      this.setState({ currentLocation: { latitude, longitude } })
+    })
+  }
+
   render() {
     return (
-      <div>
+      <div className="container">
         {
           dummyData.map(destination => <Destination destination={destination} />)
         }
