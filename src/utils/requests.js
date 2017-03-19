@@ -31,3 +31,16 @@ export const getClosestAirport = ({
     })
     .then(res => res.body)
 }
+
+
+export const share = ({
+  destination,
+  liked_pictures
+}) => {
+  return request.post(`${BASE_API_URL}/get_sharable_link`)
+    .send({
+      destination,
+      liked_pictures
+    })
+    .then(res => res.body)
+}

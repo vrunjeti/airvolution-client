@@ -30,6 +30,7 @@ class App extends React.Component {
 
     return (
       <div className="container">
+        <h1>Alfred</h1>
         {
           dummyData.map(destination => (
             <Destination

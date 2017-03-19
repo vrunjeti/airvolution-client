@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Grid, Col, Row } from 'react-bootstrap'
 import { LikedImages, Flights } from './'
-import { getFlights } from './../utils/requests'
+import { getFlights, share } from './../utils/requests'
 
 // const dummyRequestParams = {
 //   num_passengers: 2,
@@ -20,12 +20,23 @@ export default class Destination extends React.Component {
     }
   }
 
+  shareItinerary() {
+    const { destination } = this.props
+    const { location_name, liked_image_urls } = destination
+    share({ destination: location_name, liked_pictures: liked_image_urls })
+      .then(res => {
+        this.setState(res)
+      })
+  }
+
   // componentDidMount() {
   //   getFlights(dummyRequestParams).then(flights => {
   //     // const { departing_flights, return_flights } = flights
   //     this.setState(flights)
   //   })
   // }
+
+
 
   render() {
     const { destination, closestAirportCode } = this.props
@@ -42,9 +53,14 @@ export default class Destination extends React.Component {
     } = destination
 
     return (
-      <div>
-        <h1>Let's go to {name}!</h1>
+      <div className="destination">
+        <h1 className="title">Let's go to {name}!</h1>
         <LikedImages likedImages={likedImages} />
+        <h3>
+          Low Fares to {name} available on
+          <a href="http://airasia.com" target="new"> AirAsia</a>!
+        </h3>
+        <button className="btn btn-default" onClick={this.shareItinerary.bind(this)}>Share Itinerary</button>
       </div>
     )
   }
